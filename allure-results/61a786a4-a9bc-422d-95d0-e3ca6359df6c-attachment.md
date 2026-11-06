@@ -1,0 +1,177 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Purchase.spec.js >>  complete the purchase of  mobile of user mia935 and 7qeQrh
+- Location: tests\Purchase.spec.js:13:5
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+```
+Error: locator.click: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for getByRole('link', { name: 'Add to Cart' })
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=f2e1]:
+  - text:             
+  - navigation [ref=f2e2]:
+    - generic [ref=f2e3]:
+      - link "PRODUCT STORE" [ref=f2e4] [cursor=pointer]:
+        - /url: index.html
+      - list [ref=f2e7]:
+        - listitem [ref=f2e8]:
+          - link "Home (current)" [ref=f2e9] [cursor=pointer]:
+            - /url: index.html
+            - text: Home
+            - generic [ref=f2e10]: (current)
+        - listitem [ref=f2e11]:
+          - link "Contact" [ref=f2e12] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=f2e13]:
+          - link "About us" [ref=f2e14] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=f2e15]:
+          - link "Cart" [ref=f2e16] [cursor=pointer]:
+            - /url: cart.html
+        - listitem [ref=f2e17]:
+          - link "Log in" [ref=f2e18] [cursor=pointer]:
+            - /url: "#"
+        - listitem
+        - listitem
+        - listitem [ref=f2e19]:
+          - link "Sign up" [ref=f2e20] [cursor=pointer]:
+            - /url: "#"
+  - generic [ref=f2e24]:
+    - generic:
+      - list [ref=f2e25]:
+        - listitem [ref=f2e26] [cursor=pointer]
+        - listitem [ref=f2e27] [cursor=pointer]
+        - listitem [ref=f2e28] [cursor=pointer]
+      - link:
+        - /url: "#myCarousel-2"
+      - link:
+        - /url: "#myCarousel-2"
+  - generic [ref=f2e31]:
+    - generic [ref=f2e34]:
+      - heading "About Us" [level=4] [ref=f2e35]
+      - paragraph [ref=f2e36]: We believe performance needs to be validated at every stage of the software development cycle and our open source compatible, massively scalable platform makes that a reality.
+    - generic [ref=f2e39]:
+      - heading "Get in Touch" [level=4] [ref=f2e40]
+      - paragraph [ref=f2e41]: "Address: 2390 El Camino Real"
+      - paragraph [ref=f2e42]: "Phone: +440 123456"
+      - paragraph [ref=f2e43]: "Email: demo@blazemeter.com"
+    - heading "PRODUCT STORE" [level=4] [ref=f2e47]
+  - contentinfo [ref=f2e49]:
+    - paragraph [ref=f2e50]: Copyright © Product Store
+```
+
+# Test source
+
+```ts
+  1  | import TestDataGenerator from '../Utils/RandomDataGenerator';
+  2  | 
+  3  | 
+  4  | export default class Purchase {
+  5  |     constructor(page) {
+  6  |         this.page = page
+  7  |         this.mobile = page.getByRole('link', { name: 'Samsung galaxy s6' })
+  8  |         this.productName = page.locator('.name');
+  9  |         this.addTocartBtn = page.getByRole('link', { name: 'Add to Cart' })
+  10 |         this.Homebtn = page.getByRole('link', { name: 'Home' })
+  11 |         this.catgryMonitor = page.getByRole('link', { name: 'Monitors' })
+  12 |         this.catgryPhones = page.getByRole('link', { name: 'Phones' })
+  13 |         this.monitor = page.getByRole('link', { name: 'Apple monitor 24' })
+  14 |         this.randomProduct = page.getByRole('link', { name: 'Sony xperia z5' })
+  15 |         //same name found so added exact
+  16 |         this.CartBtn = page.getByRole('link', { name: 'Cart', exact: true })
+  17 |         this.CartProduct = page.getByRole('cell', { name: 'Samsung galaxy s6' })
+  18 |         this.PlaceorderBtn = page.getByRole('button', { name: 'Place Order' })
+  19 | //used the util file
+  20 |         const testData = new TestDataGenerator();
+  21 |         this.FullnameVal = testData.generateRandomFullName()
+  22 |         this.countryVal = testData.generateCountry()
+  23 |         this.cityVal = testData.generateCityName()
+  24 |         this.cardVal = testData.generateFormattedCardNumber()
+  25 |         this.monthVal = testData.generateRandomMonth()
+  26 |         this.yearval = testData.generateRandomYear()
+  27 | 
+  28 | 
+  29 |         this.Fullname = page.getByRole('textbox', { name: 'name' })
+  30 |         this.country = page.getByRole('textbox', { name: 'country' })
+  31 |         this.city = page.getByRole('textbox', { name: 'city' })
+  32 |         this.Creditcard = page.getByRole('textbox', { name: 'card' })
+  33 |         this.month = page.getByRole('textbox', { name: 'month' })
+  34 |         this.year = page.getByRole('textbox', { name: 'year' })
+  35 |         this.purchaseConfirm = page.getByRole('button', { name: 'purchase' })
+  36 |     
+  37 |         this.purchaseconfirmText= page.getByRole('heading',{name : 'Thank you for your purchase!'})
+  38 |         this.okBtn =page.getByRole('button',{name:'OK'})
+  39 |     }
+  40 | 
+  41 |     async MobPurchaseflow() {
+  42 |         await this.mobile.isVisible()
+  43 |         await this.mobile.waitFor({ state: 'visible' })
+  44 |         await this.mobile.click()
+  45 |         await this.productName.isVisible()
+  46 |         await this.addTocartBtn.isVisible()
+> 47 |         await this.addTocartBtn.click()
+     |                                 ^ Error: locator.click: Test timeout of 30000ms exceeded.
+  48 |     }
+  49 | 
+  50 |     async MonitorPurchaseflow() {
+  51 |         await this.catgryMonitor.click()
+  52 |         await this.mobile.waitFor({ state: 'visible' })
+  53 |         await this.monitor.click()
+  54 |         await this.addTocartBtn.isVisible()
+  55 |         await this.addTocartBtn.click()
+  56 | 
+  57 |     }
+  58 | 
+  59 |     async RandomPurchaseflow() {
+  60 |     //    await this.catgryPhones.click()
+  61 |         await this.randomProduct.isVisible()
+  62 |         await this.randomProduct.click()
+  63 |         await this.addTocartBtn.isVisible()
+  64 |         await this.addTocartBtn.click()
+  65 |     }
+  66 | 
+  67 |     async CompletePurchaseofMobile() {
+  68 |         await this.CartBtn.click()
+  69 |         await this.CartProduct.isVisible()
+  70 |         await this.PlaceorderBtn.click()
+  71 | 
+  72 |     }
+  73 | 
+  74 | 
+  75 |     async FillThedata(FullnameVal,countryVal,cityVal,cardVal,monthVal,yearval) {
+  76 |         await this.Fullname.fill(FullnameVal)
+  77 |         await this.country.fill(countryVal)
+  78 |         await this.city.fill(cityVal)
+  79 |         await this.Creditcard.fill(cardVal)
+  80 |         await this.month.fill(monthVal)
+  81 |         await this.year.fill(yearval)
+  82 |         await this.purchaseConfirm.click()
+  83 | 
+  84 | 
+  85 |     }
+  86 | 
+  87 |     async ConfirmOder(){
+  88 |          await this.purchaseconfirmText.isVisible()
+  89 |          await this.okBtn.click()
+  90 |     }
+  91 | 
+  92 | }
+```

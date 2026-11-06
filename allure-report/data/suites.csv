@@ -1,0 +1,3 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","5310","Verify Valid user name as mia935 and valid password as7qeQrh","chromium","2026-11-03","passed","2026-11-03","","Login.spec.js","",""
+"","2316","Verifying a successfull purchase of a random product with user name as mia935 and password as 7qeQrh","chromium","2026-11-03","failed","2026-11-03","","Purchase.spec.js","",""

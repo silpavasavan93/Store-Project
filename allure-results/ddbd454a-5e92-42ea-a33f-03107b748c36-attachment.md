@@ -1,0 +1,72 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Login.spec.js >> Verify the  login with invalid username  as mia935 and invalid password as7qeQrh
+- Location: tests\Login.spec.js:48:2
+
+# Error details
+
+```
+Error: locator.click: Test ended.
+Call log:
+  - waiting for locator('#logInModal').getByRole('Button', { name: 'Log in' })
+    - locator resolved to <button type="button" onclick="logIn()" class="btn btn-primary">Log in</button>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not stable
+    - retrying click action
+    - waiting 20ms
+    - waiting for element to be visible, enabled and stable
+    - element is not stable
+  - retrying click action
+    - waiting 100ms
+    - waiting for element to be visible, enabled and stable
+
+```
+
+# Test source
+
+```ts
+  1  | export default class Login {
+  2  |     constructor(page) {
+  3  |         this.page = page
+  4  |         this.loginLink = page.getByRole('link', { name: 'Log in' })
+  5  |         this.username = page.locator('#loginusername')
+  6  |         this.password = page.locator('#loginpassword')
+  7  |         this.LoginBtn = page.locator('#logInModal').getByRole('Button', { name: 'Log in' })
+  8  |         this.logoutBtn = page.getByRole('link', { name: 'Log out', exact: true })
+  9  |     }
+  10 | 
+  11 |     async LoginLink() {
+  12 |         await this.loginLink.click()
+  13 | 
+  14 |     }
+  15 |     // one function is enough , we can change the parameters in spec.js file
+  16 | 
+  17 |     async loginFunctionality(usernameVal, passwordVal) {
+  18 |         await this.username.fill(usernameVal)
+  19 |         await this.password.fill(passwordVal)
+> 20 |         await this.LoginBtn.click()
+     |                             ^ Error: locator.click: Test ended.
+  21 |     }
+  22 | 
+  23 |     async logout() {
+  24 |         await this.logoutBtn.click()
+  25 | 
+  26 |     }
+  27 |     async getURL() {
+  28 |         return this.page.url()
+  29 |         // return this.page.url() is used to get the current URL of the page. It returns a promise that resolves to a string representing the URL of the page.
+  30 |         // this return means that the function getURL() will return the current URL of the page when it is called. This can be useful for verifying that the user has been redirected to the correct page after logging in or performing other actions on the website.
+  31 |     }
+  32 |     async dialogAccept() {
+  33 |         this.page.on('dialog', dialog => dialog.accept());
+  34 |     }
+  35 | 
+  36 | }
+```

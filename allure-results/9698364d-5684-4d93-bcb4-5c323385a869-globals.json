@@ -1,0 +1,1 @@
+{"attachments":[],"errors":[{"message":"beforeEach hook failed: Error: browser.newContext: Target page, context or browser has been closed","trace":"Error: browser.newContext: Target page, context or browser has been closed","status":"broken","timestamp":1793688102478}]}
