@@ -40,21 +40,16 @@ export default class Purchase {
 
     async MobPurchaseflow() {
         await this.mobile.isVisible()
-        await this.mobile.waitFor({ state: 'visible' })
         await this.mobile.click()
         await this.productName.isVisible()
         await this.addTocartBtn.isVisible()
-        await this.addTocartBtn.waitFor({ state: 'visible' });
-
         await this.addTocartBtn.click()
     }
 
     async MonitorPurchaseflow() {
         await this.catgryMonitor.click()
-        await this.mobile.waitFor({ state: 'visible' })
         await this.monitor.click()
         await this.addTocartBtn.isVisible()
-        await this.addTocartBtn.waitFor({ state: 'visible' });
        await this.addTocartBtn.click()
 
     }
@@ -64,7 +59,6 @@ export default class Purchase {
         await this.randomProduct.isVisible()
         await this.randomProduct.click()
         await this.addTocartBtn.isVisible()
-        await this.addTocartBtn.waitFor({ state: 'visible' });
         await this.addTocartBtn.click()
     }
 
